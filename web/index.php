@@ -1,5 +1,5 @@
 <?php
-define('APPNAME_PUBLIC_ROOT', __DIR__);
+define('INSTAGRAMREST_PUBLIC_ROOT', __DIR__);
 
 $filename = __DIR__.preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']);
 if (php_sapi_name() === 'cli-server' && is_file($filename)) {
