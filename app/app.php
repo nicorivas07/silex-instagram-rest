@@ -1,7 +1,15 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Silex\Application;
+use Silex\Provider\ServiceControllerServiceProvider;
+
+$app = new Application();
+$app->register(new ServiceControllerServiceProvider());
+
+// Register repositories.
+$app['instagram.repository'] = $app->share(function ($app) {
+    return new InstagramRest\Repository\InstagramRepository($app);
+});
 
 // Register the error handler.
 $app->error(function (\Exception $e, $code) use ($app) {
