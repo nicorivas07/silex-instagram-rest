@@ -10,6 +10,26 @@ use Silex\Application;
 class InstagramRepository implements InstagramInterface
 {
     /**
+     * Error API
+     */
+    const ERROR_API = "APINotFoundError";
+
+    /**
+     * Error API Message
+     */
+    const ERROR_API_MESSAGE = "invalid media id";
+
+    /**
+     * Data Null
+     */
+    const DATA_NULL = "Null";
+
+    /**
+     * Data Null Message
+     */
+    const DATA_NULL_MESSAGE = "No data available";
+
+    /**
      * @var MetzWeb\Instagram\Instagram
      */
     protected $instagram;
@@ -17,22 +37,59 @@ class InstagramRepository implements InstagramInterface
     /**
      * Constructor of the class
      */
-    public function __construct()
+    public function __construct($client_id)
     {
-        $instagram = new Instagram('4edf05a5083e43e6b8a684ce8912205f');
+        $instagram = new Instagram($client_id);
 
         $this->instagram = $instagram;
     }
 
     /**
-     * Get
+     * validateMedia it controls the input is numeric
+     * and connect with Instagram API for location data
      *
-     * @param int $media_id
-     * @return Instagram
-     */
-    public function getMedia($media_id)
+     * @param  int $media_id
+     * @return array response
+     *         array response['location'] || response['error']
+     *         int   response['status']
+     **/
+    public function validateMedia($media_id)
     {
-        return $this->instagram->getMedia($media_id);
+        if (!empty((int) $media_id)) {
+            $instagram = $this->instagram->getMedia($media_id);
+            if (!empty($instagram)) {
+                if (empty($instagram->meta->error_type)) {
+                    $response = array(
+                        'location' => $instagram->data->location,
+                        'status' => 200
+                    );
+                } else {
+                    $response = array(
+                        'error' => array(
+                            'error' => $instagram->meta->error_type,
+                            'message' => $instagram->meta->error_message
+                        ),
+                        'status' => 409
+                    );
+                }
+            } else {
+                $response = array(
+                    'error' => array(
+                        'error' => self::DATA_NULL,
+                        'message' => self::DATA_NULL_MESSAGE
+                    ),
+                    'status' => 409
+                );
+            }
+        } else {
+            $response = array(
+                'error' => array(
+                    'error' => self::ERROR_API,
+                    'message' => self::ERROR_API_MESSAGE
+                ),
+                'status' => 409
+            );
+        }
+        return $response;
     }
-
 }

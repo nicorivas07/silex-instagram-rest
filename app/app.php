@@ -2,13 +2,20 @@
 
 use Silex\Application;
 use Silex\Provider\ServiceControllerServiceProvider;
+use InstagramRest\Repository\InstagramRepository;
+use InstagramRest\Controller\InstagramController;
 
 $app = new Application();
 $app->register(new ServiceControllerServiceProvider());
 
 // Register repositories.
-$app['instagram.repository'] = $app->share(function ($app) {
-    return new InstagramRest\Repository\InstagramRepository($app);
+$app['instagram.repository'] = $app->share(function() use ($app) {
+    return new InstagramRepository($app['instagram.client_id']);
+});
+
+// Register controller.
+$app['instagram.controller'] = $app->share(function() use ($app) {
+    return new InstagramController($app['instagram.repository']);
 });
 
 // Register the error handler.

@@ -9,10 +9,10 @@ namespace InstagramRest\Repository;
 interface InstagramInterface
 {
     /**
-     * GetMedia
+     * validateMedia
      *
-     * @param mixed $media_id
+     * @param  mixed $media_id
      * @return void
-     */
-    public function getMedia($media_id);
+     **/
+    public function validateMedia($media_id);
 }

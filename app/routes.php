@@ -2,7 +2,6 @@
 
 // Register routes.
 $app->get(
-    '/locations/instagram/{media_id}',
-    'InstagramRest\Controller\InstagramController::indexAction'
+    '/locations/instagram/{media_id}', "instagram.controller:indexAction"
 );
 

@@ -9,29 +9,8 @@ namespace InstagramRest\Controller;
 use Silex\Application;
 use InstagramRest\Repository\InstagramRepository;
 
-
 class InstagramController
 {
-    /**
-     * Error API
-     */
-    const ERROR_API = "APINotFoundError";
-
-    /**
-     * Error API Message
-     */
-    const ERROR_API_MESSAGE = "invalid media id";
-
-    /**
-     * Data Null
-     */
-    const DATA_NULL = "Null";
-
-    /**
-     * Data Null Message
-     */
-    const DATA_NULL_MESSAGE = "No data available";
-
     /**
      * InstagramRest\Repository\InstagramRepository
      *
@@ -44,62 +23,19 @@ class InstagramController
      *
      * @param InstagramRepository $instagram
      */
-    public function __construct()
+    public function __construct(InstagramRepository $instagram)
     {
-        $this->instagram = new InstagramRepository();
-    }
-
-    public function indexAction($media_id, Application $app) {
-        return $app->json($this->validateMedia($media_id));
+        $this->instagram = $instagram;
     }
 
     /**
-     * validateMedia it controls the input is numeric
-     * and connect with Instagram API for location data
+     * index display media location data
      *
      * @param  int $media_id
-     * @return array response
-     *         array response['location'] || response['error']
-     *         int   response['status']
-     **/
-    private function validateMedia($media_id)
-    {
-        if (!empty((int) $media_id)) {
-            $instagram = $this->instagram->getMedia($media_id);
-            if (!empty($instagram)) {
-                if (empty($instagram->meta->error_type)) {
-                    $response = array(
-                        'location' => $instagram->data->location,
-                        'status' => 200
-                    );
-                } else {
-                    $response = array(
-                        'error' => array(
-                            'error' => $instagram->meta->error_type,
-                            'message' => $instagram->meta->error_message
-                        ),
-                        'status' => 409
-                    );
-                }
-            } else {
-                $response = array(
-                    'error' => array(
-                        'error' => self::DATA_NULL,
-                        'message' => self::DATA_NULL_MESSAGE
-                    ),
-                    'status' => 409
-                );
-            }
-        } else {
-            $response = array(
-                'error' => array(
-                    'error' => self::ERROR_API,
-                    'message' => self::ERROR_API_MESSAGE
-                ),
-                'status' => 409
-            );
-        }
-        return $response;
+     * @param  Application $app
+     * @return array $response
+     */
+    public function indexAction($media_id, Application $app) {
+        return $app->json($this->instagram->validateMedia($media_id));
     }
-
 }
