@@ -36,6 +36,8 @@ class InstagramRepository implements InstagramInterface
 
     /**
      * Constructor of the class
+     *
+     * @param string $client_id
      */
     public function __construct($client_id)
     {
