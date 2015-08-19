@@ -16,7 +16,7 @@ class GooglePlaceRepositoryTest extends \PHPUnit_Framework_TestCase
     /**
      * Google API key
      */
-    const API_KEY = 'AIzaSyC0bv7x1pEG4kq-XYF7O3_J_tVEG8VG6mY';
+    const API_KEY = 'Your Google Place API KEY';
 
     /**
      * Test data null

@@ -11,7 +11,7 @@ class InstagramRepositoryTest extends \PHPUnit_Framework_TestCase
     /**
      * Instagram client_id
      */
-    const CLIENT_ID = '4edf05a5083e43e6b8a684ce8912205f';
+    const CLIENT_ID = 'Your Instagram Client ID';
 
     /**
      * Test Wrong media_id.
