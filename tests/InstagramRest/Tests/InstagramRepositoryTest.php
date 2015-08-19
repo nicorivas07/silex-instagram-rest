@@ -1,6 +1,6 @@
 <?php
 /**
- * Test for InstagramRepository
+ * Test for Instagram Repository
  *
  * @author Nicolas Rivas <nicolasrivas07@gmail.com>
  */
@@ -40,7 +40,7 @@ class InstagramRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testSuccess()
     {
         $instagram = new InstagramRepository(self::CLIENT_ID);
-        $response = $instagram->validateMedia('914837609611565028_4255960601');
+        $response = $instagram->validateMedia('914837609611565028');
         $this->assertArrayHasKey('location', $response);
     }
 }

@@ -3,7 +3,6 @@ namespace InstagramRest\Repository;
 
 /**
  * GooglePlaceInterface
- *
  */
 interface GooglePlaceInterface
 {

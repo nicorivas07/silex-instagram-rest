@@ -22,23 +22,23 @@ class InstagramController
     /**
      * InstagramRest\Repository\GooglePlaceRepository
      *
-     * @var Google
+     * @var place
      */
-    protected $google;
+    protected $place;
 
     /**
      * Constructor of the class
      *
      * @param InstagramRepository $instagram
-     * @param GooglePlaceRepository $google
+     * @param GooglePlaceRepository $place
      */
     public function __construct(
         InstagramRepository $instagram,
-        GooglePlaceRepository $google
+        GooglePlaceRepository $place
     )
     {
         $this->instagram = $instagram;
-        $this->google = $google;
+        $this->place = $place;
     }
 
     /**
@@ -55,7 +55,6 @@ class InstagramController
         } else {
             $response = $v['error'];
         }
-        //return Response::json($response, $v['status']);
         return $app->json($response, $v['status']);
     }
 
@@ -84,7 +83,7 @@ class InstagramController
         );
 
         if (!empty($location->latitude) && !empty($location->longitude)) {
-            $google_data = $this->google->get(
+            $google_data = $this->place->get(
                 $location->latitude, $location->longitude
             );
             $response['location'] = array(
@@ -96,6 +95,7 @@ class InstagramController
                 'address' => $google_data['address']
             );
         }
+
         if (!empty($location->id)) {
             $response['location']['id'] = $location->id;
         }

@@ -3,6 +3,7 @@ namespace InstagramRest\Repository;
 
 use Silex\Application;
 use GuzzleHttp;
+
 /**
  * Google Place Repository
  */
