@@ -38,6 +38,15 @@ $ sudo composer update #It may take a few minutes
 ```
 Composer will create the project under the path/to/install directory.
 
+Open the config file prod.php and set your Google Place and Instagram API Keys
+```php
+#silex-instagram-rest/app/config/prod.php
+$app['instagram.client_id'] = 'Your Instagram Client ID';
+$app['google.key'] = 'Your Google Paces API Key';
+```
+
+If you will run unit test, you'll need set the keys in the test files too.
+
 Turn on a test enviroment server
 
 ```sh
